@@ -75,6 +75,14 @@ function install_ripgrep {
   fi
 }
 
+function install_deb-get {
+  if ! command -v deb-get &> /dev/null
+  then
+    sudo apt install curl lsb-release wget
+    curl -sL https://raw.githubusercontent.com/wimpysworld/deb-get/main/deb-get | sudo -E bash -s install deb-get
+  fi
+}
+
 install_fish
 install_atuin
 install_eza
@@ -82,3 +90,4 @@ install_bat
 install_nala
 install_neofetch
 install_ripgrep
+install_deb-get
