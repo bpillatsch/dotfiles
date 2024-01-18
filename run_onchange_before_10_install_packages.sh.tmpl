@@ -8,7 +8,10 @@
 #   atuin sync
 
 function install_atuin {
-  bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
+  if ! command -v atuin &> /dev/null
+  then
+    bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
+  fi
 }
 
 function install_fish {
