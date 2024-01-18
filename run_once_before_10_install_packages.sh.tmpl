@@ -103,7 +103,7 @@ function install_btop {
 function install_fd {
   if ! command -v fdfind &> /dev/null
   then
-    sudo apt install fd
+    sudo apt install fd-find
   fi
 }
 
@@ -121,13 +121,6 @@ function install_duf {
   fi
 }
 
-function install_fd {
-  if ! command -v fd &> /dev/null
-  then
-    sudo apt install fd-find
-  fi
-}
-
 install_fish
 install_atuin
 install_eza
@@ -141,4 +134,3 @@ install_btop
 install_fd
 install_pinfo
 install_duf
-install_fd
