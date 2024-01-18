@@ -69,7 +69,7 @@ function install_neofetch {
 }
 
 function install_ripgrep {
-  if ! command -v ripgrep &> /dev/null
+  if ! command -v rg &> /dev/null
   then
     sudo apt install -y ripgrep
   fi
@@ -83,6 +83,48 @@ function install_deb-get {
   fi
 }
 
+function install_du-dust {
+  if ! command -v dust &> /dev/null
+  then
+    sudo deb-get install du-dust
+  fi
+}
+
+function install_btop {
+  if ! command -v btop &> /dev/null
+  then
+    sudo apt install btop
+  fi
+}
+
+function install_fd {
+  if ! command -v fdfind &> /dev/null
+  then
+    sudo apt install fd
+  fi
+}
+
+function install_pinfo {
+  if ! command -v pinfo &> /dev/null
+  then
+    sudo apt install pinfo
+  fi
+}
+
+function install_duf {
+  if ! command -v duf &> /dev/null
+  then
+    sudo apt install duf
+  fi
+}
+
+function install_fd {
+  if ! command -v fd &> /dev/null
+  then
+    sudo apt install fd-find
+  fi
+}
+
 install_fish
 install_atuin
 install_eza
@@ -91,3 +133,9 @@ install_nala
 install_neofetch
 install_ripgrep
 install_deb-get
+install_du-dust
+install_btop
+install_fd
+install_pinfo
+install_duf
+install_fd
