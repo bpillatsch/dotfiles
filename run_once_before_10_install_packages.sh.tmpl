@@ -36,6 +36,11 @@ function install_fish {
   then
     fish -c "fisher install decors/fish-colored-man"
   fi
+
+  if ! test -f $HOME/.config/fish/completions/docker-compose.fish
+  then
+    fish -c "fisher install brgmnn/fish-docker-compose"
+  fi
 }
 
 function install_eza {
