@@ -119,7 +119,7 @@ fi
 eval $($HOME/bin/wsl2-ssh-agent)
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"
+eval "$(atuin init bash --disable-up-arrow)"
 
 alias cat='batcat -pp'
 alias bat='batcat'
