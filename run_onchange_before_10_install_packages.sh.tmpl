@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+
+# Assume chezmoi is already installed
+# after 
+#   atuin login bpillatsch (will need atuin key)
+#   atuin import auto
+#   atuin sync
+
+function install_atuin {
+  bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
+}
+
+function install_fish {
+  if ! command -v fish &> /dev/null
+  then
+    sudo apt-add-repository ppa:fish-shell/release-3
+    sudo apt update
+    sudo apt install fish
+  fi
+
+  if ! type -q fisher &> /dev/null
+  then
+    fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+  fi
+
+  if ! type -q bass &> /dev/null
+  then
+    fish -c "fisher install edc/bass"
+  fi
+}
+
+function install_eza {
+  if ! command -v eza &> /dev/null
+  then
+    sudo mkdir -p /etc/apt/keyrings
+    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+    sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+    sudo apt update
+    sudo apt install -y eza
+  fi
+}
+
+function install_bat {
+  if ! command -v batcat &> /dev/null
+  then
+    sudo apt install -y bat
+  fi
+}
+
+function install_nala {
+  if ! command -v nala &> /dev/null
+  then
+    sudo apt install -y nala
+  fi
+}
+
+function install_neofetch {
+  if ! command -v neofetch &> /dev/null
+  then
+    sudo apt install -y neofetch
+  fi
+}
+
+install_fish
+install_atuin
+install_eza
+install_bat
+install_nala

@@ -1,0 +1,7 @@
+if status is-interactive
+    atuin init fish  --disable-up-arrow | source
+end
+
+if status is-login
+    $HOME/bin/wsl2-ssh-agent | source
+end
