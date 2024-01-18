@@ -19,7 +19,7 @@ function install_fish {
   then
     sudo apt-add-repository ppa:fish-shell/release-3
     sudo apt update
-    sudo apt install fish
+    sudo apt install -y fish
   fi
 
   #if ! type -q fisher &> /dev/null
@@ -68,9 +68,17 @@ function install_neofetch {
   fi
 }
 
+function install_ripgrep {
+  if ! command -v ripgrep &> /dev/null
+  then
+    sudo apt install -y ripgrep
+  fi
+}
+
 install_fish
 install_atuin
 install_eza
 install_bat
 install_nala
 install_neofetch
+install_ripgrep
