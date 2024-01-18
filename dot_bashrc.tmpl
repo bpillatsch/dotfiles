@@ -121,5 +121,6 @@ eval $($HOME/bin/wsl2-ssh-agent)
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash)"
 
-alias cat='batcat'
+alias cat='batcat -pp'
+alias bat='batcat'
 alias ls='eza'
