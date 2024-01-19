@@ -4,5 +4,7 @@ if status is-interactive
 end
 
 if status is-login
-  $HOME/bin/wsl2-ssh-agent | source
+  if test -e $HOME/bin/wsl2-ssh-agent
+    $HOME/bin/wsl2-ssh-agent | source
+  end
 end
