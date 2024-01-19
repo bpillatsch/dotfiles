@@ -116,7 +116,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-eval $($HOME/bin/wsl2-ssh-agent)
+if [ -e $HOME/bin/wsl2-ssh-agent ]; then
+  eval $($HOME/bin/wsl2-ssh-agent)
+fi
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
