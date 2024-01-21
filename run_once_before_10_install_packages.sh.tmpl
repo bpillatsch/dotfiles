@@ -126,6 +126,20 @@ function install_duf {
   fi
 }
 
+function install_tealdeer {
+  if ! command -v tldr &> /dev/null
+  then
+    curl -sL -o $HOME/bin/tldr https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/tealdeer-linux-x86_64-musl
+    chmod +x $HOME/bin/tldr
+    tldr -u
+  fi
+
+  if ! test -f $HOME/.config/fish/completions/tldr.fish
+  then
+    curl -sL -o $HOME/.config/fish/completions/tldr.fish https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/completions_fish
+  fi
+}
+
 install_fish
 install_atuin
 install_eza
@@ -139,3 +153,4 @@ install_btop
 install_fd
 install_pinfo
 install_duf
+install_tealdeer
