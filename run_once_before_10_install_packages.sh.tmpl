@@ -12,6 +12,12 @@ function install_atuin {
   then
     bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
   fi
+ 
+  # condiser adding bash completions 
+  if ! test -f $HOME/.config/fish/completions/atuin.fish
+  then
+    atuin gen-completions --shell fish --out-dir $HOME
+  fi
 }
 
 function install_fish {
@@ -134,6 +140,7 @@ function install_tealdeer {
     tldr -u
   fi
 
+  # Consider adding bash completions
   if ! test -f $HOME/.config/fish/completions/tldr.fish
   then
     curl -sL -o $HOME/.config/fish/completions/tldr.fish https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/completions_fish
