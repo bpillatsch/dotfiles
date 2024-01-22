@@ -128,7 +128,7 @@ function install_pinfo {
 function install_duf {
   if ! command -v duf &> /dev/null
   then
-    sudo apt install duf
+    sudo apt install -y duf
   fi
 }
 
@@ -137,7 +137,7 @@ function install_tealdeer {
   then
     curl -sL -o $HOME/bin/tldr https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/tealdeer-linux-x86_64-musl
     chmod +x $HOME/bin/tldr
-    tldr -u
+    $HOME/bin/tldr -u
   fi
 
   # Consider adding bash completions
