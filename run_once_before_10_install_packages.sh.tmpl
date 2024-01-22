@@ -92,7 +92,7 @@ function install_ripgrep {
 function install_deb-get {
   if ! command -v deb-get &> /dev/null
   then
-    sudo apt install curl lsb-release wget
+    sudo apt install -y curl lsb-release wget
     curl -sL https://raw.githubusercontent.com/wimpysworld/deb-get/main/deb-get | sudo -E bash -s install deb-get
   fi
 }
@@ -100,28 +100,28 @@ function install_deb-get {
 function install_du-dust {
   if ! command -v dust &> /dev/null
   then
-    sudo deb-get install du-dust
+    sudo deb-get install -y du-dust
   fi
 }
 
 function install_btop {
   if ! command -v btop &> /dev/null
   then
-    sudo apt install btop
+    sudo apt install -y btop
   fi
 }
 
 function install_fd {
   if ! command -v fdfind &> /dev/null
   then
-    sudo apt install fd-find
+    sudo apt install -y fd-find
   fi
 }
 
 function install_pinfo {
   if ! command -v pinfo &> /dev/null
   then
-    sudo apt install pinfo
+    sudo apt install -y pinfo
   fi
 }
 
