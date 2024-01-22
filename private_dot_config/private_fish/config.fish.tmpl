@@ -4,7 +4,15 @@ if status is-interactive
 end
 
 if status is-login
-  if test -e $HOME/bin/wsl2-ssh-agent
-    $HOME/bin/wsl2-ssh-agent | source
+  if test -e $HOME/.local/bin/wsl2-ssh-agent
+    $HOME/.local/bin/wsl2-ssh-agent | source
+  end
+
+  for file in $__fish_config_dir/custom.d/*.fish
+    source $file
+  end
+
+  if type -q thefuck
+    thefuck --alias | source
   end
 end
