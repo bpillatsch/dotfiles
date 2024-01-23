@@ -9,7 +9,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 {{ if (eq .chezmoi.osRelease.id "debian" "ubuntu") -}}
     echo "fix for debian bookworm"
 {{  if ne .chezmoi.username "root" -}}
-    sudo apt update && apt upgrade -y
+    sudo apt update && sudo apt upgrade -y
     sudo apt install -y software-properties-common python3-launchpadlib
 {{ else -}}
     apt update && apt upgrade -y
