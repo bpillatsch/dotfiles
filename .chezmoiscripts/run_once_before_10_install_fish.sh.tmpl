@@ -14,7 +14,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 
       echo "adding fish repository"
       deb_version=$(cat /etc/os-release | grep 'VERSION_ID' | cut --delimiter="=" -f 2 | tr -d '"')
-      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_$deb_version/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_'$deb_version'/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_$deb_version/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
       sudo apt update
       sudo apt install -y fish
@@ -25,7 +25,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 
       echo "adding fish repository"
       deb_version=$(cat /etc/os-release | grep 'VERSION_ID' | cut --delimiter="=" -f 2 | tr -d '"')
-      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_$deb_version/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_'$deb_version'/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_$deb_version/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
       apt update
       apt install -y fish
