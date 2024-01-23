@@ -7,7 +7,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 
 # Install fish
 {{ if (eq .chezmoi.osRelease.id "debian" "ubuntu") -}}
-    if ! command -v fish; then
+    if ! command -v fish &> /dev/null; then
       echo "adding ppa:fish-shell/release-3 repository to apt"
 {{  if ne .chezmoi.username "root" -}}
       sudo add-apt-repository -y ppa:fish-shell/release-3
@@ -20,7 +20,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 {{  end -}}
     fi
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
-    if ! command -v fish; then
+    if ! command -v fish &> /dev/null; then
 {{  if ne .chezmoi.username "root" -}}
       echo "installing fish"
       sudo pacman -S --noconfirm fish
@@ -33,8 +33,8 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 
 # Setting fish as default shell
 if [ $(getent passwd $(whoami) | cut -d: -f7) != $(which fish) ]; then
-  echo "Changing default shell to fish"
-  chsh -s $(which fish)
+  echo "Remember to change default shell to fish"
+  #chsh -s $(which fish)
 fi
 
 echo -e "\0033[0;32m>>>>>> Finish Installing Fish Shell <<<<<<\033[0m"

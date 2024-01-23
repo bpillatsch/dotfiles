@@ -5,11 +5,11 @@ set -eufo pipefail
 
 echo -e "\033[0;32m>>>>>> Begin Setting Up Ubuntu/Debian Packages <<<<<<\033[0m"
 
-repositories = (
+repositories=(
   ppa:neovim-ppa/stable
 )
 
-packages = (
+packages=(
   curl
   git
   thefuck
@@ -26,7 +26,7 @@ packages = (
 
 for repo in ${repositories[@]}; do
   ppa_repo_source=${repo#ppa:}
-  if ! $(apt-cache policy | grep http | awk '{print $2}' | sort -u | grep $ppa_repo_source &> /dev/null; then
+  if ! $(apt-cache policy | grep http | awk '{print $2}' | sort -u) | grep $ppa_repo_source &> /dev/null; then
     echo "adding $repo repository to apt"
 {{  if ne .chezmoi.username "root" -}}
     sudo add-apt-repository -y $repo
@@ -38,7 +38,7 @@ for repo in ${repositories[@]}; do
 done
 
 for package in ${packages[@]}; do
-  if ! $(dpkg-query -W -f='installed' $package &> /dev/null; then
+  if ! $(dpkg-query -W -f='installed' $package &> /dev/null); then
     echo "installing $package"
 {{  if ne .chezmoi.username "root" -}}
     sudo apt install -y $package
