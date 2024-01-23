@@ -13,7 +13,7 @@ end
 
 if type -q atuin
   echo "setting up atuin completion"
-  atuin gen-completions --shell fish --out-dir $HOME
+  atuin gen-completions --shell fish --out-dir $HOME/.config/fish/completions/
 end
 
 if command -v tldr &> /dev/null
