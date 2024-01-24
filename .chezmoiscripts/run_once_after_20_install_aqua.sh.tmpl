@@ -17,7 +17,7 @@ fi
 # rerun aqua install when aqua.yaml hash has changed
 # .config/aqua.yaml hash: {{ include "private_dot_config/aqua.yaml" | sha256sum }}
 export AQUA_GLOBAL_CONFIG={{ .chezmoi.homeDir }}/.config/aqua.yaml
-aqua update-aqua
-aqua install -a
+$HOME/.local/share/aquaproj-aqua/bin/aqua update-aqua
+$HOME/.local/share/aquaproj-aqua/bin/aqua install -a
 
 echo -e "\033[0;32m>>>>>> Finish Setting Up Aqua <<<<<<\033[0m"
