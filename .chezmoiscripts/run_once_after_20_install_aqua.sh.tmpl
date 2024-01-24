@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+echo -e "\033[0;32m>>>>>> Begin Setting Up Aqua <<<<<<\033[0m"
+
+if ! command -v aqua; then
+  echo "installing aqua"
+  cd {{ .chezmoi.homeDir }}/.cache
+  curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.2.0/aqua-installer
+  echo "d13118c3172d90ffa6be205344b93e8621de9bf47c852d80da188ffa6985c276  aqua-installer" | sha256sum -c
+  chmod +x aqua-installer
+  ./aqua-installer
+  rm -f aqua-installer
+fi
+
+# rerun aqua install when aqua.yaml hash has changed
+# .config/aqua.yaml hash: {{ include "private_dot_config/aqua.yaml" | sha256sum }}
+export AQUA_GLOBAL_CONFIG={{ .chezmoi.homeDir }}/.config/aqua.yaml
+aqua update-aqua
+aqua install -a
+
+echo -e "\033[0;32m>>>>>> Finish Setting Up Aqua <<<<<<\033[0m"

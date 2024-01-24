@@ -1,0 +1,14 @@
+registries:
+  - type: standard
+    ref: v4.123.0 # renovate: depName=aquaproj/aqua-registry
+packages:
+  - name: twpayne/chezmoi@v2.45.0
+  - name: BurntSushi/ripgrep@v14.1.0
+  - name: sharkdp/fd@v9.0.0
+  - name: neovim/neovim@v0.9.5
+  - name: eza-community/eza@v0.17.2
+  - name: aristocratos/btop@v1.2.13
+  - name: sharkdb/bat@v0.24.0
+  - name: bootandy/dust@v0.9.0
+  - name: muesli/duf@v0.8.1
+  - name: zellij-org/zellij@v0.39.2

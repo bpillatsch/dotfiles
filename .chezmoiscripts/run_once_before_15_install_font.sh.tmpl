@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+font_dir="$HOME/.local/share/fonts"
+font_url="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/L/Regular/MesloLGLNerdFontMono-Regular.ttf"
+
+if ! fc-list | grep -q Meslo; then
+  mkdir -p "$font_dir"
+  wget "$font_url" -P "$font_dir"
+  fc-cache -v
+fi

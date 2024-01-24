@@ -9,24 +9,23 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
   {{ if eq .chezmoi.osRelease.id "debian" -}}
     {{ if ne .chezmoi.username "root" -}}
       echo "fix for debian bookworm add-apt-repository"
-      sudo apt update && sudo apt upgrade -y
+      sudo apt update
       sudo apt install -y software-properties-common python3-launchpadlib
 
+      
       echo "adding fish repository"
-      deb_version=$(cat /etc/os-release | grep 'VERSION_ID' | cut --delimiter="=" -f 2 | tr -d '"')
-      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_'$deb_version'/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
-      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_$deb_version/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
       sudo apt update
       sudo apt install -y fish
     {{ else -}}
       echo "fix for debian bookworm add-apt-repository"
-      apt update && apt upgrade -y
+      apt update
       apt install -y software-properties-common python3-launchpadlib
 
       echo "adding fish repository"
-      deb_version=$(cat /etc/os-release | grep 'VERSION_ID' | cut --delimiter="=" -f 2 | tr -d '"')
-      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_'$deb_version'/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
-      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_$deb_version/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
       apt update
       apt install -y fish
     {{ end -}}
@@ -47,7 +46,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
     fi
 
 # Arch
-  {{ else if eq .chezmoi.osRelease.id "arch" -}}
+  {{ else if (eq .chezmoi.osRelease.id "arch" "endeavouros") -}}
     if ! command -v fish &> /dev/null; then
     {{ if ne .chezmoi.username "root" -}}
       echo "installing fish"
@@ -61,8 +60,8 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 
 # Setting fish as default shell
 if [ $(getent passwd $(whoami) | cut -d: -f7) != $(which fish) ]; then
-  echo "Remember to change default shell to fish"
-  #chsh -s $(which fish)
+  echo "Changing default shell to fish"
+  chsh -s $(which fish)
 fi
 
 echo -e "\0033[0;32m>>>>>> Finish Installing Fish Shell <<<<<<\033[0m"
