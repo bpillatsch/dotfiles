@@ -12,3 +12,4 @@ packages:
   - name: bootandy/dust@v0.9.0
   - name: muesli/duf@v0.8.1
   - name: zellij-org/zellij@v0.39.2
+  - name: atuinsh/atuin@v17.2.1
