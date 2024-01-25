@@ -13,3 +13,4 @@ packages:
   - name: muesli/duf@v0.8.1
   - name: zellij-org/zellij@v0.39.2
   - name: atuinsh/atuin@v17.2.1
+  - name: dbrgn/tealdeer@v1.6.1

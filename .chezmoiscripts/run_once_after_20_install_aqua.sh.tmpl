@@ -7,10 +7,10 @@ echo -e "\033[0;32m>>>>>> Begin Setting Up Aqua <<<<<<\033[0m"
 if ! command -v aqua; then
   echo "installing aqua"
   cd {{ .chezmoi.homeDir }}/.cache
-  curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.2.0/aqua-installer
-  echo "d13118c3172d90ffa6be205344b93e8621de9bf47c852d80da188ffa6985c276  aqua-installer" | sha256sum -c
+  curl -sSfL -O https://raw.githubusercontent.com/aquaproj/aqua-installer/v2.2.0/aqua-installer >> log.txt 2> >(tee -a log.txt >&2)
+  echo "d13118c3172d90ffa6be205344b93e8621de9bf47c852d80da188ffa6985c276  aqua-installer" | sha256sum -c >> log.txt 2> >(tee -a log.txt >&2)
   chmod +x aqua-installer
-  ./aqua-installer
+  ./aqua-installer >> log.txt 2> >(tee -a log.txt >&2)
   rm -f aqua-installer
 fi
 
@@ -18,7 +18,7 @@ fi
 # .config/aqua.yaml hash: {{ include "private_dot_config/aqua.yaml" | sha256sum }}
 export AQUA_GLOBAL_CONFIG={{ .chezmoi.homeDir }}/.config/aqua.yaml
 fish -c "set -x AQUA_GLOBAL_CONFIG {{ .chezmoi.homeDir }}/.config/aqua.yaml"
-$HOME/.local/share/aquaproj-aqua/bin/aqua update-aqua
-$HOME/.local/share/aquaproj-aqua/bin/aqua install -a
+$HOME/.local/share/aquaproj-aqua/bin/aqua update-aqua >> log.txt 2> >(tee -a log.txt >&2)
+$HOME/.local/share/aquaproj-aqua/bin/aqua install -a >> log.txt 2> >(tee -a log.txt >&2)
 
 echo -e "\033[0;32m>>>>>> Finish Setting Up Aqua <<<<<<\033[0m"

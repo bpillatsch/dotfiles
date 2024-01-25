@@ -8,17 +8,17 @@ end
 
 if type -q chezmoi
   echo "setting up chezmoi completion"
-  chezmoi completion fish --output=$__fish_config_dir/completions/chezmoi.fish
+  chezmoi completion fish --output=$__fish_config_dir/completions/chezmoi.fish >> log.txt 2> >(tee -a log.txt >&2)
 end
 
 if type -q atuin
   echo "setting up atuin completion"
-  atuin gen-completions --shell fish --out-dir $HOME/.config/fish/completions/
+  atuin gen-completions --shell fish --out-dir $HOME/.config/fish/completions/ >> log.txt 2> >(tee -a log.txt >&2)
 end
 
 if command -v tldr &> /dev/null
   echo "setting up tldr completion"
-  curl -sL -o $__fish_config_dir/completions/tldr.fish https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/completions_fish
+  curl -sL -o $__fish_config_dir/completions/tldr.fish https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/completions_fish >> log.txt 2> >(tee -a log.txt >&2)
 end
 
 echo -e "\033[0;32m>>>>>> Finish Setting Up Fish Completions <<<<<<\033[0m"

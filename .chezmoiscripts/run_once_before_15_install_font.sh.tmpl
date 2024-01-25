@@ -5,6 +5,6 @@ font_url="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo
 
 if ! fc-list | grep -q Meslo; then
   mkdir -p "$font_dir"
-  wget "$font_url" -P "$font_dir"
-  fc-cache -v
+  wget "$font_url" -P "$font_dir" >> log.txt 2> >(tee -a log.txt >&2)
+  fc-cache -v >> log.txt 2> >(tee -a log.txt >&2)
 fi
