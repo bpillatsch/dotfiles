@@ -3,7 +3,7 @@
 
 set -eufo pipefail
 
-tput setaf 5; tput setaf bold; echo ">>>>>> Begin Installing Fish Shell <<<<<<"
+tput setaf 5; tput bold; echo ">>>>>> Begin Installing Fish Shell <<<<<<"
 
 # Debian
   {{ if eq .chezmoi.osRelease.id "debian" -}}
