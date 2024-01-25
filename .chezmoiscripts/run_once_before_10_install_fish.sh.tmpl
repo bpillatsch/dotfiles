@@ -26,6 +26,7 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
       echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
       apt update >> log.txt 2> >(tee -a log.txt >&2)
+      echo "installing fish"
       apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
   

@@ -22,7 +22,7 @@ packages=(
 )
 
 for package in ${packages[@]}; do
-  if ! command -v $package &> /dev/null; then
+  if fish -c "! command -v $package &> /dev/null"; then
     echo "!!!! Package Missing: $package !!!!"
   fi
 done
