@@ -51,9 +51,9 @@ done
 
 # Update repo index
     {{- if ne .chezmoi.username "root" }}
-sudo apt update
+sudo apt update >> log.txt 2> >(tee -a log.txt >&2)
     {{- else }}
-apt update
+apt update >> log.txt 2> >(tee -a log.txt >&2)
     {{- end }}
 
 # Install packages on Debian/Ubuntu
