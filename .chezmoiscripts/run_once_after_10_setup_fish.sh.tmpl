@@ -5,7 +5,7 @@ echo -e "\033[0;32m>>>>>> Begin Setting Up Fish shell <<<<<<\033[0m"
 # Configure fish/plugins/prompt
 if ! type -q fisher
   echo "installing fisher"
-  bash -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher >> log.txt 2> >(tee -a log.txt >&2)"
+  curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher 
 end
 
 # Run script on hash change of .config/fish/fish_plugins
