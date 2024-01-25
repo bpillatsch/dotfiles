@@ -9,25 +9,24 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
   {{ if eq .chezmoi.osRelease.id "debian" -}}
     {{ if ne .chezmoi.username "root" -}}
       echo "fix for debian bookworm add-apt-repository"
-      sudo apt update
-      sudo apt install -y software-properties-common python3-launchpadlib
+      sudo apt update >> log.txt 2> >(tee -a log.txt >&2)
+      sudo apt install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
 
-      
       echo "adding fish repository"
       echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
-      sudo apt update
-      sudo apt install -y fish
+      sudo apt update >> log.txt 2> >(tee -a log.txt >&2)
+      sudo apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
       echo "fix for debian bookworm add-apt-repository"
-      apt update
-      apt install -y software-properties-common python3-launchpadlib
+      apt update >> log.txt 2> >(tee -a log.txt >&2)
+      apt install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
 
       echo "adding fish repository"
       echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
-      apt update
-      apt install -y fish
+      apt update >> log.txt 2> >(tee -a log.txt >&2)
+      apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
   
 # Ubuntu  
@@ -35,13 +34,13 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
     if ! command -v fish &> /dev/null; then
       echo "adding ppa:fish-shell/release-3 repository to apt"
     {{ if ne .chezmoi.username "root" -}}
-      sudo add-apt-repository -y ppa:fish-shell/release-3
+      sudo add-apt-repository -y ppa:fish-shell/release-3 >> log.txt 2> >(tee -a log.txt >&2)
       echo "installing fish"
-      sudo apt install -y fish
+      sudo apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
-      add-apt-repository -y ppa:fish-shell/release-3
+      add-apt-repository -y ppa:fish-shell/release-3 >> log.txt 2> >(tee -a log.txt >&2)
       echo "installing fish"
-      apt install -y fish
+      apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
     fi
 
@@ -50,10 +49,10 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
     if ! command -v fish &> /dev/null; then
     {{ if ne .chezmoi.username "root" -}}
       echo "installing fish"
-      sudo pacman -S --noconfirm fish
+      sudo pacman -S --noconfirm fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
       echo "installing fish"
-      pacman -S --noconfirm fish
+      pacman -S --noconfirm fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
     fi
   {{ end -}}
