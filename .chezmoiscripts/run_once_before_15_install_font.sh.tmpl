@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
+tput setaf 5; tput bold; echo ">>>>>> Adding Meslo LG L Nerd Font <<<<<<"
+
 font_dir="$HOME/.local/share/fonts"
 font_url="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Meslo/L/Regular/MesloLGLNerdFontMono-Regular.ttf"
 
 if ! fc-list | grep -q Meslo &> /dev/null; then
   mkdir -p "$font_dir"
+  tput setaf 4; echo "....downloading font"
   wget "$font_url" -P "$font_dir" >> log.txt 2> >(tee -a log.txt >&2)
+  tput setaf 4; echo "....installing font"
   fc-cache -v >> log.txt 2> >(tee -a log.txt >&2)
 fi
+
+tput setaf 5; tput bold; echo "<<<<<< Finish Adding Meslo LG L Nerd Font >>>>>>"

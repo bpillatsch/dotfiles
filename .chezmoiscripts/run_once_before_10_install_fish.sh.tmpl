@@ -3,45 +3,43 @@
 
 set -eufo pipefail
 
-echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
+tput setaf 5; tput setaf bold; echo ">>>>>> Begin Installing Fish Shell <<<<<<"
 
 # Debian
   {{ if eq .chezmoi.osRelease.id "debian" -}}
     {{ if ne .chezmoi.username "root" -}}
-      echo "fix for debian bookworm add-apt-repository"
-      sudo apt update >> log.txt 2> >(tee -a log.txt >&2)
-      sudo apt install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
+      tput setaf 4; echo "....fix Debian bookworm add-apt-repository"
+      sudo apt-get update >> log.txt 2> >(tee -a log.txt >&2)
+      sudo apt-get install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
 
-      echo "adding fish repository"
-      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+      tput setaf 4; echo "....adding fish repository"
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
-      sudo apt update >> log.txt 2> >(tee -a log.txt >&2)
-      sudo apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
+      sudo apt-get update >> log.txt 2> >(tee -a log.txt >&2)
+      sudo apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
-      echo "fix for debian bookworm add-apt-repository"
-      apt update >> log.txt 2> >(tee -a log.txt >&2)
-      apt install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
+      tput setaf 4; echo "....fix Debian bookworm add-apt-repository"
+      apt-get update >> log.txt 2> >(tee -a log.txt >&2)
+      apt-get install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
 
-      echo "adding fish repository"
-      echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_{{ .chezmoi.osRelease.versionID }}/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+      tput setaf 4; echo "....adding fish repository"
       curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
-      apt update >> log.txt 2> >(tee -a log.txt >&2)
-      echo "installing fish"
-      apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
+      apt-get update >> log.txt 2> >(tee -a log.txt >&2)
+      tput setaf 4; echo "....installing fish"
+      apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
   
 # Ubuntu  
   {{ else if eq .chezmoi.osRelease.id "ubuntu" -}}
     if ! command -v fish &> /dev/null; then
-      echo "adding ppa:fish-shell/release-3 repository to apt"
+      tput setaf 4; echo "....adding ppa:fish-shell/release-3 repository to apt"
     {{ if ne .chezmoi.username "root" -}}
       sudo add-apt-repository -y ppa:fish-shell/release-3 >> log.txt 2> >(tee -a log.txt >&2)
-      echo "installing fish"
-      sudo apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
+      tput setaf 4; echo "....installing fish"
+      sudo apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
       add-apt-repository -y ppa:fish-shell/release-3 >> log.txt 2> >(tee -a log.txt >&2)
-      echo "installing fish"
-      apt install -y fish >> log.txt 2> >(tee -a log.txt >&2)
+      tput setaf 4; echo "....installing fish"
+      apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
     fi
 
@@ -49,10 +47,10 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
   {{ else if (eq .chezmoi.osRelease.id "arch" "endeavouros") -}}
     if ! command -v fish &> /dev/null; then
     {{ if ne .chezmoi.username "root" -}}
-      echo "installing fish"
+      tput setaf 4; echo "....installing fish"
       sudo pacman -S --noconfirm fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
-      echo "installing fish"
+      tput setaf 4; echo "....installing fish"
       pacman -S --noconfirm fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
     fi
@@ -60,9 +58,10 @@ echo -e "\0033[0;32m>>>>>> Begin Installing Fish Shell <<<<<<\033[0m"
 
 # Setting fish as default shell
 if [ $(getent passwd $(whoami) | cut -d: -f7) != $(which fish) ]; then
-  echo "Changing default shell to fish"
-  chsh -s $(which fish)
+  tput setaf 4; echo "....changing default shell to fish\n"
+
+  tput setaf 1; chsh -s $(which fish)
 fi
 
-echo -e "\0033[0;32m>>>>>> Finish Installing Fish Shell <<<<<<\033[0m"
+tput setaf 5; tput bold; echo "<<<<<< Finish Installing Fish Shell >>>>>>"
 {{ end -}}

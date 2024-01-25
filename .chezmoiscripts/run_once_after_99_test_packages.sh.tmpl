@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "\033[0;32m>>>>>> Test Package Installation <<<<<<\033[0m"
+tput setaf 5; tput bold; echo ">>>>>> Test Package Installation <<<<<<"
 
 packages=(
   kitty
@@ -23,8 +23,12 @@ packages=(
 
 for package in ${packages[@]}; do
   if fish -c "! command -v $package &> /dev/null"; then
-    echo "!!!! Package Missing: $package !!!!"
+    tput setaf 1; tput bold; echo "!!!! Package Missing: $package !!!!"
   fi
 done
 
-echo -e "\033[0;32m>>>>>> Finish Testing Package Installation <<<<<<\033[0m"
+# remove chezmoi from ~/.local/bin as it now resides in aqua bin folder
+tput setaf 4; echo "....removing chezmoi bin from ~/.local/bin"
+rm -f $HOME/.local/bin/chezmoi
+
+tput setaf 5; tput bold; echo "<<<<<< Finish Testing Package Installation >>>>>>"

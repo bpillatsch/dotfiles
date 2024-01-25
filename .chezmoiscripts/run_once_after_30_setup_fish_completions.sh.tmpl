@@ -1,24 +1,24 @@
 #!/usr/bin/fish
 
-echo -e "\033[0;32m>>>>>> Begin Setting Up Fish Completions <<<<<<\033[0m"
+tput setaf 5; tput bold; echo ">>>>>> Begin Setting Up Fish Completions <<<<<<"
 
 if ! test -d $__fish_config_dir/completions
   mkdir -p $__fish_config_dir/completions
 end
 
 if type -q chezmoi
-  echo "setting up chezmoi completion"
+  tput setaf 4; echo "....setting up chezmoi completion"
   chezmoi completion fish --output=$__fish_config_dir/completions/chezmoi.fish
 end
 
 if type -q atuin
-  echo "setting up atuin completion"
+  tput setaf 4; echo "....setting up atuin completion"
   atuin gen-completions --shell fish --out-dir $HOME/.config/fish/completions/
 end
 
 if command -v tldr &> /dev/null
-  echo "setting up tldr completion"
+  tput setaf 4; echo "....setting up tldr completion"
   curl -sL -o $__fish_config_dir/completions/tldr.fish https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/completions_fish
 end
 
-echo -e "\033[0;32m>>>>>> Finish Setting Up Fish Completions <<<<<<\033[0m"
+tput setaf 5; tput bold; echo "<<<<<< Finish Setting Up Fish Completions >>>>>>"

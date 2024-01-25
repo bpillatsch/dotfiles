@@ -3,126 +3,82 @@
 
 set -eufo pipefail
 
-echo -e "\033[0;32m>>>>>> Begin Package Installation <<<<<<\033[0m"
+tput setaf 5; tput bold; echo ">>>>>> Begin Package Installation <<<<<<"
 
 packages=(
   curl
   wget
   git
-  #thefuck
   kitty
   tmux
-#  zellij
-#  bat
-#  nala
   neofetch
-#  neovim
-#  ripgrep
-#  btop
-#  fd-find
-#  duf
 )
 
   {{ if (eq .chezmoi.osRelease.id "ubuntu" "debian") -}}
 
-repositories=(
-  #ppa:neovim-ppa/stable
-  ppa:git-core/ppa
-)
+    repositories=(
+      ppa:git-core/ppa
+    )
 
-packages+=(
-  nala
-)
+    packages+=(
+      nala
+    )
 
-# If Ubuntu install PPA(s) (not Debian)
+    # If Ubuntu install PPA(s) (not Debian)
     {{ if eq .chezmoi.osRelease.id "ubuntu" -}}
-for repo in ${repositories[@]}; do
-  ppa_repo_source=${repo#ppa:}
-  if ! $(apt-cache policy | grep $ppa_repo_source &> /dev/null); then
-    echo "adding $repo repository to apt"
-      {{ if ne .chezmoi.username "root" -}}
-    sudo add-apt-repository -y $repo >> log.txt 2> >(tee -a log.txt >&2)
-      {{ else -}}
-    add-apt-repository -y $repo >> log.txt 2> >(tee -a log.txt >&2)
-      {{ end -}}
-  fi
-done
+      for repo in ${repositories[@]}; do
+        ppa_repo_source=${repo#ppa:}
+        if ! $(apt-cache policy | grep $ppa_repo_source &> /dev/null); then
+          tput setaf 4; echo "....adding $repo repository to apt"
+          {{ if ne .chezmoi.username "root" -}}
+            sudo add-apt-repository -y $repo >> log.txt 2> >(tee -a log.txt >&2)
+          {{ else -}}
+            add-apt-repository -y $repo >> log.txt 2> >(tee -a log.txt >&2)
+          {{ end -}}
+        fi
+      done
     {{ end -}}
 
-# Update repo index
+    # Update repo index
+    tput setaf 4; echo "....updating apt index"
     {{- if ne .chezmoi.username "root" }}
-sudo apt update >> log.txt 2> >(tee -a log.txt >&2)
+      sudo apt-get update >> log.txt 2> >(tee -a log.txt >&2)
     {{- else }}
-apt update >> log.txt 2> >(tee -a log.txt >&2)
+      apt-get update >> log.txt 2> >(tee -a log.txt >&2)
     {{- end }}
 
-# Install packages on Debian/Ubuntu
-for package in ${packages[@]}; do
-  if ! $(dpkg-query -W -f='installed' $package &> /dev/null); then
-    echo "installing $package"
-    {{ if ne .chezmoi.username "root" -}}
-    sudo apt install -y $package >> log.txt 2> >(tee -a log.txt >&2)
-    {{ else -}}
-    apt install -y $package >> log.txt 2> >(tee -a log.txt >&2)
-    {{ end -}}
-  fi
-done
+    # Install packages on Debian/Ubuntu
+    for package in ${packages[@]}; do
+      if ! $(dpkg-query -W -f='installed' $package &> /dev/null); then
+        tput setaf 4; echo "....installing $package"
+        {{ if ne .chezmoi.username "root" -}}
+          sudo apt-get install -y $package >> log.txt 2> >(tee -a log.txt >&2)
+        {{ else -}}
+          apt-get install -y $package >> log.txt 2> >(tee -a log.txt >&2)
+        {{ end -}}
+      fi
+    done
 
-# Install on arch/endeavouros
+  # Install on arch/endeavouros
   {{ else if (eq .chezmoi.osRelease.id "arch" "endeavouros") -}}
 
-packages+=()
+    packages+=()
 
-# Update package index?
+    # Update package index?
 
-for package in ${packages[@]}; do
-  if [ "$(pacman -Qq $package 2> /dev/null") != $package ]; then
-    echo "installing $package"
-    {{- if ne .chezmoi.username "root" }}
-    sudo pacman -S --noconfirm $package >> log.txt 2> >(tee -a log.txt >&2)
-    {{- else }}
-    pacman -S --noconfirm $package >> log.txt 2> >(tee -a log.txt >&2)
-    {{- end }}
-  fi
-done
-
-# Setup/Install AUR?
-
-#if ! command -v atuin &> /dev/null; then
-#  echo "installing atuin"
-#  bash <(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)
-#fi
-#
-#if ! command -v eza &> /dev/null; then
-#  echo "installing eza"
-#  sudo mkdir -p /etc/apt/keyrings
-#  wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-#  echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-#  sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-#  sudo apt update
-#  sudo apt install -y eza
-#fi
-#
-#if ! command -v deb-get &> /dev/null; then
-#  echo "installing deb-get"
-#  sudo apt install -y curl lsb-release wget
-#  curl -sL https://raw.githubusercontent.com/wimpysworld/deb-get/main/deb-get | sudo -E bash -s install deb-get
-#fi
-#
-#if ! command -v dust &> /dev/null; then
-#  echo "installing dust"
-#  sudo deb-get install du-dust
-#fi
-#
-#if ! command -v tldr &> /dev/null; then
-#  echo "installing tldr"
-#  curl -sL -o $HOME/.local/bin/tldr https://github.com/dbrgn/tealdeer/releases/download/v1.6.1/tealdeer-linux-x86_64-musl
-#  chmod +x $HOME/.local/bin/tldr
-#  $HOME/.local/bin/tldr -u
-#fi
+    for package in ${packages[@]}; do
+      if [ "$(pacman -Qq $package 2> /dev/null") != $package ]; then
+        tput setaf 4; echo "....installing $package"
+        {{- if ne .chezmoi.username "root" }}
+          sudo pacman -S --noconfirm $package >> log.txt 2> >(tee -a log.txt >&2)
+        {{- else }}
+          pacman -S --noconfirm $package >> log.txt 2> >(tee -a log.txt >&2)
+        {{- end }}
+      fi
+    done
 
   {{ end -}}
 
-echo -e "\033[0;32m>>>>>> Finish Package Installation <<<<<<\033[0m"
+tput setaf 5; tput bold; echo "<<<<<< Finish Package Installation >>>>>>"
 
 {{ end -}}
