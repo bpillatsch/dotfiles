@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+echo -e "\033[0;32m>>>>>> Test Package Installation <<<<<<\033[0m"
+
+packages=(
+  kitty
+  tmux
+  neofetch
+  aqua
+  chezmoi
+  rg
+  fd
+  nvim
+  eza
+  btop
+  bat
+  dust
+  duf
+  zellij
+  atuin
+  tealdeer
+)
+
+for package in ${packages[@]}; do
+  if ! command -v $package &> /dev/null; then
+    echo "!!!! Package Missing: $package !!!!"
+  fi
+done
+
+echo -e "\033[0;32m>>>>>> Finish Testing Package Installation <<<<<<\033[0m"
