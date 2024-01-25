@@ -11,7 +11,7 @@ end
 # Run script on hash change of .config/fish/fish_plugins
 # .config/fish/fish_plugins hash: {{ include "private_dot_config/private_fish/fish_plugins.tmpl" | sha256sum }}
 
-fisher update >> log.txt 2> >(tee -a log.txt >&2)
+fisher update
 
 echo -e "\033[0;32m>>>>>> Finish Setting Up Fish Shell <<<<<<\033[0m"
 
