@@ -4,12 +4,6 @@ set -x AQUA_GLOBAL_CONFIG ~/.config/aqua.yaml
 if status is-interactive
   #starship init fish | source
   atuin init fish  --disable-up-arrow | source
-end
-
-if status is-login
-  if test -e $HOME/.local/bin/wsl2-ssh-agent
-    $HOME/.local/bin/wsl2-ssh-agent | source
-  end
 
   for file in $__fish_config_dir/custom.d/*.fish
     source $file
@@ -18,4 +12,11 @@ if status is-login
   if type -q thefuck
     thefuck --alias | source
   end
+end
+
+if status is-login
+  if test -e $HOME/.local/bin/wsl2-ssh-agent
+    $HOME/.local/bin/wsl2-ssh-agent | source
+  end
+
 end
