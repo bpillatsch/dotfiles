@@ -13,7 +13,7 @@ tput setaf 5; tput bold; echo ">>>>>> Begin Installing Fish Shell <<<<<<"
       sudo apt-get install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
 
       tput setaf 4; echo "....adding fish repository"
-      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:4/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_4.gpg > /dev/null
       sudo apt-get update >> log.txt 2> >(tee -a log.txt >&2)
       sudo apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
@@ -22,7 +22,7 @@ tput setaf 5; tput bold; echo ">>>>>> Begin Installing Fish Shell <<<<<<"
       apt-get install -y software-properties-common python3-launchpadlib >> log.txt 2> >(tee -a log.txt >&2)
 
       tput setaf 4; echo "....adding fish repository"
-      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null
+      curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:4/Debian_{{ .chezmoi.osRelease.versionID }}/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_4.gpg > /dev/null
       apt-get update >> log.txt 2> >(tee -a log.txt >&2)
       tput setaf 4; echo "....installing fish"
       apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
@@ -31,13 +31,13 @@ tput setaf 5; tput bold; echo ">>>>>> Begin Installing Fish Shell <<<<<<"
 # Ubuntu  
   {{ else if eq .chezmoi.osRelease.id "ubuntu" -}}
     if ! command -v fish &> /dev/null; then
-      tput setaf 4; echo "....adding ppa:fish-shell/release-3 repository to apt"
+      tput setaf 4; echo "....adding ppa:fish-shell/release-4 repository to apt"
     {{ if ne .chezmoi.username "root" -}}
-      sudo add-apt-repository -y ppa:fish-shell/release-3 >> log.txt 2> >(tee -a log.txt >&2)
+      sudo add-apt-repository -y ppa:fish-shell/release-4 >> log.txt 2> >(tee -a log.txt >&2)
       tput setaf 4; echo "....installing fish"
       sudo apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ else -}}
-      add-apt-repository -y ppa:fish-shell/release-3 >> log.txt 2> >(tee -a log.txt >&2)
+      add-apt-repository -y ppa:fish-shell/release-4 >> log.txt 2> >(tee -a log.txt >&2)
       tput setaf 4; echo "....installing fish"
       apt-get install -y fish >> log.txt 2> >(tee -a log.txt >&2)
     {{ end -}}
